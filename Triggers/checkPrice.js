@@ -1,7 +1,6 @@
 'use strict';
 require('dotenv').config()
 
-// const awsParamStore = require('aws-param-store');
 const ethers = require('ethers');
 const ENV = 'rinkeby'
 const mock_keypairs = require("../mocks/keypairs.json");
@@ -9,9 +8,10 @@ const MOCK_PUBKEYS = require('../mocks/publicKeys.js')
 const toAddress = '0x1425b7581Ccc63d5e9aA5D186047a40b14e6f3DB'
 
 /*
-1. Get all user's public address and triggers where triggered = false
-2. Check whether each user's target falls below a certain price
-3. If so, trigger action lambda to retrieve the user's private key and trigger sendTransaction()
+1. Price service retrieves latest Eth price from the dynamo table
+1. Get all tasks where there's no previous history
+3. Check all returned tasks for whether user's task.trigger.targetPrice is below the latest price
+5. If it does, trigger transferAction lambda with user's public key, toAddress, and amount 
 */
 
 /*
