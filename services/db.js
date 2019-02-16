@@ -22,3 +22,30 @@ module.exports.scanDb = async TableName => {
     console.log('err', e);
   }
 }
+
+module.exports.getDb = async (TableName, Key)  => {
+  const params = {
+    TableName,
+    Key,
+  };
+  try {
+    return await dynamodb.get(params).promise();
+  } catch(e) {
+    console.log('err', e);
+  }
+}
+
+module.exports.updateDb = async (TableName, Key, UpdateExpression, ExpressionAttributeValues)  => {
+  const params = {
+    TableName,
+    Key,
+    UpdateExpression,
+    ExpressionAttributeValues,
+  };
+  try {
+    return await dynamodb.get(params).promise();
+  } catch(e) {
+    console.log('err', e);
+  }
+}
+

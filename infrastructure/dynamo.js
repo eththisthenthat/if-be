@@ -4,8 +4,6 @@ const AWS = require('aws-sdk');
 
 let options = {};
 
-console.log('here', process.env.IS_OFFLINE);
-
 if(process.env.IS_OFFLINE) {
   options = {
     region: 'localhost',
