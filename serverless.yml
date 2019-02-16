@@ -1,7 +1,14 @@
 service: ethttt-if-be
 
+plugins:
+  - serverless-dynamodb-local
+  - serverless-dotenv-plugin
+  - serverless-offline
+
 custom:
   dynamodb:
+    stages:
+      - dev
     start:
       port: 8000
       inMemory: true
@@ -10,7 +17,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-east-1
+  # region: us-east-1
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -25,43 +32,48 @@ provider:
       Resource: !GetAtt DynamoDBTable.Arn
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+# environment:
+#   SLS_DEBUG: '*'
 
 functions:
-  getEthPrice:
-    handler: handler.getEthPrice
-    events: 
-      - schedule: rate(1 minute)
-  getUser:
-    handler: users/get
+  hello:
+    handler: handler.hello
     events:
       - http:
-        path: users/{ethAddress}
-        method: get
-        cors: true
+          path: '/'
+          method: get
+          cors: true
+  # getEthPrice:
+  #   handler: handler.getEthPrice
+  #   events: 
+  #     - schedule: rate(1 minute)
+  # getUser:
+  #   handler: users/get/index.get
+  #   events:
+  #     - http:
+  #       path: users/{ethAddress}
+  #       method: get
+  #       cors: true
   createUser:
-    handler: users/create
+    handler: users/create/index.create
     events:
       - http:
-        path: users/
-        method: post
-        cors: true
+          path: /users
+          method: post
+          cors: true
 
 resources:
   Resources:
-    DynamoDBTable:
+    usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: "Users"
+        TableName: "usersTable"
+        AttributeDefinitions:
+          - AttributeName: "address"
+            AttributeType: S
+        KeySchema:
+          - AttributeName: "address"
+            KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        AttributeDefinitions:
-          -
-            AttributeName: "network"
-            AttributeType: "S"
-        KeySchema:
-          -
-            AttributeName: "network"
-            KeyType: "HASH"
