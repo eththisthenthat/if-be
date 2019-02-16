@@ -62,3 +62,6 @@ typings/
 
 # Serverless directories
 .serverless
+
+#
+keypairs.json

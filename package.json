@@ -4,6 +4,7 @@
   "description": "",
   "main": "handler.js",
   "dependencies": {
+    "ethers": "^4.0.25",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "serverless": "^1.37.1",

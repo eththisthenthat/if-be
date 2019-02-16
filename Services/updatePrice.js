@@ -4,9 +4,18 @@ const rp = require('request-promise');
 const assert = require('assert');
 const { isValidCurrency } = require('../assertUtils')
 
+// Add {event, context, callback} later
+
+/*
+Example event
+{
+    "SYMBOL" : "0xe5B73Dd4308E12C69E365f78611Dfee806317eD",
+  }
+*/
+
 module.exports.updatePrice = async (symbol) => {
   try {
-    let ethPrice = await getPrice(symbol)
+    let ethPrice = getPrice(symbol)
     // TO DO: Write To DB
     return {
       statusCode: 200,
