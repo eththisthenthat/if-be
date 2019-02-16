@@ -1,0 +1,27 @@
+{
+  "name": "ethttt-if-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "serverless": "^1.37.1",
+    "serverless-dotenv-plugin": "^2.0.1",
+    "serverless-dynamodb-local": "^0.2.36"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eththisthenthat/if-be.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eththisthenthat/if-be/issues"
+  },
+  "homepage": "https://github.com/eththisthenthat/if-be#readme"
+}

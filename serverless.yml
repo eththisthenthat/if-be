@@ -1,0 +1,67 @@
+service: ethttt-if-be
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+      Resource: !GetAtt DynamoDBTable.Arn
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+functions:
+  getEthPrice:
+    handler: handler.getEthPrice
+    events: 
+      - schedule: rate(1 minute)
+  getUser:
+    handler: users/get
+    events:
+      - http:
+        path: users/{ethAddress}
+        method: get
+        cors: true
+  createUser:
+    handler: users/create
+    events:
+      - http:
+        path: users/
+        method: post
+        cors: true
+
+resources:
+  Resources:
+    DynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "Users"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        AttributeDefinitions:
+          -
+            AttributeName: "network"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "network"
+            KeyType: "HASH"
