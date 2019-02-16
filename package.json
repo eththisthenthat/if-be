@@ -4,12 +4,18 @@
   "description": "",
   "main": "handler.js",
   "dependencies": {
+    "ethers": "^4.0.25",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "serverless": "^1.37.1",
+    "serverless-dotenv-plugin": "^2.0.1",
+    "serverless-dynamodb-local": "^0.2.36"
+  },
+  "devDependencies": {
     "serverless": "^1.37.1",
     "serverless-dotenv-plugin": "^2.0.1",
     "serverless-dynamodb-local": "^0.2.36",
-    "serverless-offline": "^4.4.2"
-  },
-  "devDependencies": {
+    "serverless-offline": "^4.4.2",
     "aws-sdk": "^2.404.0"
   },
   "scripts": {
