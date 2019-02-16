@@ -41,9 +41,10 @@ module.exports.updateDb = async (TableName, Key, UpdateExpression, ExpressionAtt
     Key,
     UpdateExpression,
     ExpressionAttributeValues,
+    ReturnValues: "UPDATED_NEW",
   };
   try {
-    return await dynamodb.get(params).promise();
+    return await dynamodb.update(params).promise();
   } catch(e) {
     console.log('err', e);
   }

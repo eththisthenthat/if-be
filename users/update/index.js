@@ -4,15 +4,28 @@ const {updateDb} = require('../../services/db');
 
 module.exports.update = async (event, context, callback) => {
   try {
-    console.log(event);
-    const Item = JSON.parse(event.body);
-    console.log('Item', Item);
+    const { ethAddress } = event.pathParameters;
+    const updateData = JSON.parse(event.body);
+    const key = {
+      "address": ethAddress,
+    };
+
+    let updateExpression = 'set ';
+    const expressionValues = {};
+
+    for( const key in updateData) {
+      const expressionKey = `:${key.charAt(0)}`;
+      updateExpression += `${key} = ${expressionKey}, `;
+      expressionValues[expressionKey] = updateData[key];
+    }
+
+    updateExpression = updateExpression.substring(0, updateExpression.length - 2);
 
     const results = await updateDb(
       'usersTable', 
-      {
-        "address": Item.address,
-      },
+      key,
+      updateExpression,
+      expressionValues,
     );
 
     return {
