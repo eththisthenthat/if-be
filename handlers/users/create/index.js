@@ -1,6 +1,6 @@
 'use strict';
 
-const {writeDb} = require('../../services/db');
+const {writeDb} = require('../../../services/db');
 
 module.exports.create = async (event, context, callback) => {
   try {

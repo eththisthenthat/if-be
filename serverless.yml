@@ -5,19 +5,10 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-offline
 
-custom:
-  dynamodb:
-    stages:
-      - dev
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-
 provider:
   name: aws
   runtime: nodejs8.10
-  # region: us-east-1
+  region: us-east-1
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -36,7 +27,8 @@ provider:
 #   SLS_DEBUG: '*'
 
 functions:
-  ${file(./routes/users.yml)}
+  - ${file(./routes/users.yml)}
+  - ${file(./routes/actions.yml)}
 
   # getEthPrice:
   #   handler: handler.getEthPrice
@@ -58,3 +50,31 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    actionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "actionsTable"
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: S
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+          - table: actionsTable
+            sources: [./seeds/actions.json]

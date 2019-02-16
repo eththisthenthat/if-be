@@ -1,12 +1,12 @@
 'use strict';
 
-const {getDb} = require('../../services/db');
+const {getDb} = require('../../../services/db');
 
 module.exports.get = async (event, context, callback) => {
   try {
-    const { ethAddress } = event.pathParameters;
+    const { id } = event.pathParameters;
 
-    const results = await getDb('usersTable', {"address": ethAddress});
+    const results = await getDb('actionsTable', {"id": id});
 
     return {
       statusCode: 200,

@@ -1,0 +1,28 @@
+getAction:
+  handler: handlers/actions/get/index.get
+  events:
+    - http:
+        path: /actions/{id}
+        method: get
+        cors: true
+# createAction:
+#   handler: handlers/actions/create/index.create
+#   events:
+#     - http:
+#         path: /actions
+#         method: post
+#         cors: true
+scanActions:
+  handler: handlers/actions/index/index.index
+  events:
+    - http:
+        path: /actions
+        method: get
+        cors: true
+# updateAction:
+#   handler: handlers/actions/update/index.update
+#   events:
+#     - http:
+#         path: /actions/{ethAddress}
+#         method: put
+#         cors: true
