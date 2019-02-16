@@ -1,5 +1,23 @@
 const dynamodb = require('../infrastructure/dynamo');
 
+const buildUpdateData = data => {
+  let UpdateExpression = 'set ';
+  const ExpressionAttributeValues = {};
+
+  for( const key in data) {
+    const expressionKey = `:${key.charAt(0)}`;
+    UpdateExpression += `${key} = ${expressionKey}, `;
+    ExpressionAttributeValues[expressionKey] = data[key];
+  }
+
+  UpdateExpression = UpdateExpression.substring(0, UpdateExpression.length - 2);
+
+  return {
+    UpdateExpression,
+    ExpressionAttributeValues,
+  };
+}
+
 module.exports.writeDb = async (TableName, Item) => {
   const params = {
     TableName,
@@ -21,7 +39,7 @@ module.exports.scanDb = async TableName => {
   } catch(e) {
     console.log('err', e);
   }
-}
+};
 
 module.exports.getDb = async (TableName, Key)  => {
   const params = {
@@ -33,9 +51,14 @@ module.exports.getDb = async (TableName, Key)  => {
   } catch(e) {
     console.log('err', e);
   }
-}
+};
 
-module.exports.updateDb = async (TableName, Key, UpdateExpression, ExpressionAttributeValues)  => {
+module.exports.updateDb = async (TableName, Key, updateData)  => {
+  const {
+    UpdateExpression,
+    ExpressionAttributeValues,
+  } = buildUpdateData(updateData);
+
   const params = {
     TableName,
     Key,
@@ -48,5 +71,4 @@ module.exports.updateDb = async (TableName, Key, UpdateExpression, ExpressionAtt
   } catch(e) {
     console.log('err', e);
   }
-}
-
+};
