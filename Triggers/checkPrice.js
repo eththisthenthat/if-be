@@ -5,11 +5,11 @@ require('dotenv').config()
 const ethers = require('ethers');
 const ENV = 'rinkeby'
 const mock_keypairs = require("../mocks/keypairs.json");
-const MOCK_PUBKEYS = require('../mocks/public_key_array.js')
+const MOCK_PUBKEYS = require('../mocks/publicKeys.js')
 const toAddress = '0x1425b7581Ccc63d5e9aA5D186047a40b14e6f3DB'
 
 /*
-1. Get all user's public address and target where triggered = false
+1. Get all user's public address and triggers where triggered = false
 2. Check whether each user's target falls below a certain price
 3. If so, trigger retireve the user's private key and trigger sendTransaction()
 4. Return transaction receipt
