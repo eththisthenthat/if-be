@@ -36,13 +36,7 @@ provider:
 #   SLS_DEBUG: '*'
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: '/'
-          method: get
-          cors: true
+
   # getEthPrice:
   #   handler: handler.getEthPrice
   #   events: 
@@ -60,6 +54,13 @@ functions:
       - http:
           path: /users
           method: post
+          cors: true
+  scanUsers:
+    handler: users/index/index.index
+    events:
+      - http:
+          path: /users
+          method: get
           cors: true
 
 resources:

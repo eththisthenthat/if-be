@@ -12,12 +12,12 @@ module.exports.writeDb = async (TableName, Item) => {
   }
 };
 
-module.exports.indexDb = async TableName => {
+module.exports.scanDb = async TableName => {
   const params = {
     TableName,
   };
   try {
-    await dynamodb.scan(params).promise();
+    return await dynamodb.scan(params).promise();
   } catch(e) {
     console.log('err', e);
   }
