@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Transfer ETH",
+    "id": "transfer-eth",
+    "description": "Send ETH to an ethereum address"
+  },
+  {
+    "name": "Send SMS",
+    "id": "send-sms",
+    "description": "Coming Soon - Send SMS to your phone"
+  },
+  {
+    "name": "Send email",
+    "id": "send-email",
+    "description": "Coming Soon - Send email to your address"
+  },
+  {
+    "name": "Top Off CDP",
+    "id": "top-off-cdp",
+    "description": "Coming Soon - Transfer value to a CDP"
+  }
+]

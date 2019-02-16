@@ -1,12 +1,12 @@
 'use strict';
 
-const {scanDb} = require('../../services/db');
+const {scanDb} = require('../../../services/db');
 
 module.exports.index = async (event, context, callback) => {
   try {
     const Item = JSON.parse(event.body);
 
-    const results = await scanDb('usersTable');
+    const results = await scanDb('actionsTable');
 
     return {
       statusCode: 200,

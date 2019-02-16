@@ -13,7 +13,9 @@
     "aws-sdk": "^2.404.0"
   },
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "destroy": "NODE_ENV=production sls remove",
+    "deploy": "NODE_ENV=production sls deploy"
   },
   "repository": {
     "type": "git",

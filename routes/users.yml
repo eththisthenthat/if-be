@@ -1,26 +1,26 @@
 getUser:
-  handler: users/get/index.get
+  handler: /handlers/users/get/index.get
   events:
     - http:
         path: /users/{ethAddress}
         method: get
         cors: true
 createUser:
-  handler: users/create/index.create
+  handler: /handlers/users/create/index.create
   events:
     - http:
         path: /users
         method: post
         cors: true
 scanUsers:
-  handler: users/index/index.index
+  handler: /handlers/users/index/index.index
   events:
     - http:
         path: /users
         method: get
         cors: true
 updateUser:
-  handler: users/update/index.update
+  handler: /handlers/users/update/index.update
   events:
     - http:
         path: /users/{ethAddress}

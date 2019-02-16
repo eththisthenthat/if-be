@@ -1,6 +1,6 @@
 'use strict';
 
-const {updateDb} = require('../../services/db');
+const {updateDb} = require('../../../services/db');
 
 module.exports.update = async (event, context, callback) => {
   try {
