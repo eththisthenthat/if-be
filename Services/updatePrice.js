@@ -20,15 +20,14 @@ Example event
   }
 */
 
-module.exports.updatePrice = async (symbol) => {
+module.exports.updatePrice = async (event, context, callback) => {
   try {
-    let ethPrice = getPrice(symbol)
+    let ethPrice = getPrice(event.symbol)
     // TO DO: Write To DB
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: `${symbol} price updated`,
-        // input: event,
+        message: `${event.symbol} price updated`,
       }),
     };
   } catch (err) {
