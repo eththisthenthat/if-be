@@ -1,0 +1,4 @@
+getEthPrice:
+  handler: /services/updatePrice.updatePrice
+  events:
+    - schedule: rate(1 minute)

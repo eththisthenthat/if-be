@@ -33,11 +33,7 @@ functions:
   - ${file(./routes/users.yml)}
   - ${file(./routes/actions.yml)}
   - ${file(./routes/tasks.yml)}
-
-  # getEthPrice:
-  #   handler: handler.getEthPrice
-  #   events: 
-  #     - schedule: rate(1 minute)
+  - ${file(./lambdas/getPrice.yml)}
 
 resources:
   Resources:
