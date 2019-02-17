@@ -29,7 +29,6 @@ module.exports.updateEthPrice = async (event, context, callback) => {
     let ethPrice = await getPrice(symbol)
     let date = new Date();
     let timestamp = date.getTime();
-    console.log('new price', ethPrice);
     await writeDb('pricesTable', {
       symbol,
       'priceUsd': Number(ethPrice),
