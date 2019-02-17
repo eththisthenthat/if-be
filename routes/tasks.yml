@@ -23,7 +23,7 @@ queryTasks:
   handler: /handlers/tasks/index/index.indexByUser
   events:
     - http:
-        path: /users/{address}/tasks
+        path: /userTasks/{address}
         method: get
         cors: true
 updateTask:
