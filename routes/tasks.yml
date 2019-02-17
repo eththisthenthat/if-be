@@ -1,0 +1,35 @@
+getTask:
+  handler: /handlers/tasks/get/index.get
+  events:
+    - http:
+        path: /tasks/{id}
+        method: get
+        cors: true
+createTask:
+  handler: /handlers/tasks/create/index.create
+  events:
+    - http:
+        path: /tasks
+        method: post
+        cors: true
+scanTasks:
+  handler: /handlers/tasks/index/index.index
+  events:
+    - http:
+        path: /tasks
+        method: get
+        cors: true
+queryTasks:
+  handler: /handlers/tasks/index/index.indexByUser
+  events:
+    - http:
+        path: /users/{address}/tasks
+        method: get
+        cors: true
+updateTask:
+  handler: /handlers/tasks/update/index.update
+  events:
+    - http:
+        path: /tasks/{id}
+        method: put
+        cors: true

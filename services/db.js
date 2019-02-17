@@ -72,3 +72,18 @@ module.exports.updateDb = async (TableName, Key, updateData)  => {
     console.log('err', e);
   }
 };
+
+module.exports.queryDb = async (TableName, address) => {
+  const params = {
+    TableName,
+  };
+  params.FilterExpression = "address = :address";
+  params.ExpressionAttributeValues = {
+      ":address": address,
+  }
+  try {
+    return await dynamodb.scan(params).promise();
+  } catch(e) {
+    console.log('err', e);
+  }
+};
