@@ -1,16 +1,16 @@
-getEthPrice:
-  handler: /services/updatePrice/index.updatePrice
+updateEthPrice:
+  handler: /services/updatePrice/index.updateEthPrice
   events:
     - schedule: rate(1 minute)
 fetchEthPrice:
-  handler: /services/updatePrice/index.updatePrice
+  handler: /services/updatePrice/index.updateEthPrice
   events:
     - http:
         path: /ethPrice/fetch
         method: post
         cors: true
-displayEthPrice:
-  handler: /services/updatePrice/index.displayPrice
+getEthPrice:
+  handler: /services/updatePrice/index.getEthPrice
   events:
     - http:
         path: /ethPrice
