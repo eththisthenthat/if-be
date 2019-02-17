@@ -23,13 +23,12 @@ async function getPrice(symbol){
   return response.data[symbol].quote.USD.price;
 }
 
-module.exports.updatePrice = async (event, context, callback) => {
+module.exports.updateEthPrice = async (event, context, callback) => {
   try {
     let symbol = 'ETH'
     let ethPrice = await getPrice(symbol)
     let date = new Date();
     let timestamp = date.getTime();
-    console.log('new price', ethPrice);
     await writeDb('pricesTable', {
       symbol,
       'priceUsd': Number(ethPrice),
@@ -51,7 +50,7 @@ module.exports.updatePrice = async (event, context, callback) => {
   }
 };
 
-module.exports.displayPrice = async (event, context, callback) => {
+module.exports.getEthPrice = async (event, context, callback) => {
   try {
     const results = await scanDb('pricesTable');
 

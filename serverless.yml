@@ -20,11 +20,12 @@ provider:
         - "dynamodb:PutItem"
         - "dynamodb:UpdateItem"
         - "dynamodb:DeleteItem"
-      Resource: 
-        - { "Fn::GetAtt": ["usersTable", "Arn"] }
-        - { "Fn::GetAtt": ["actionsTable", "Arn"] }
-        - { "Fn::GetAtt": ["tasksTable", "Arn"] }
-        - { "Fn::GetAtt": ["pricesTable", "Arn"] }
+        - "lambda:InvokeFunction"
+      Resource: "*"
+        # - { "Fn::GetAtt": ["usersTable", "Arn"] }
+        # - { "Fn::GetAtt": ["actionsTable", "Arn"] }
+        # - { "Fn::GetAtt": ["tasksTable", "Arn"] }
+        # - { "Fn::GetAtt": ["pricesTable", "Arn"] }
 
 # you can define service wide environment variables here
 # environment:
@@ -36,6 +37,7 @@ functions:
   - ${file(./routes/tasks.yml)}
   - ${file(./lambdas/getPrice.yml)}
   - ${file(./lambdas/checkPrice.yml)}
+  - ${file(./lambdas/transferEther.yml)}
 
 resources:
   Resources:

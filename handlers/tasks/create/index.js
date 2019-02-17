@@ -5,7 +5,9 @@ const {writeDb} = require('../../../services/db');
 module.exports.create = async (event, context, callback) => {
   try {
     const Item = JSON.parse(event.body);
-    Item.id = `${Item.triggerId}_${Item.actionId}_${Item.address}`;
+    let date = new Date();
+    let timestamp = date.getTime();
+    Item.id = `${Item.triggerId}_${Item.actionId}_${Item.address}_${timestamp.toString(10)}`;
 
     await writeDb('tasksTable', Item);
 
