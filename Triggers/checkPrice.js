@@ -14,13 +14,6 @@ AWS.config.update({
 });
 
 /*
-1. Price service retrieves latest Eth price from the dynamo table
-1. Get all tasks where there's no previous history
-3. Check all returned tasks for whether user's task.trigger.targetPrice is below the latest price
-5. If it does, trigger transferAction lambda with user's public key, toAddress, and amount 
-*/
-
-/*
 Example event
   {
       "ETH_NETWORK": "rinkeby",
@@ -37,13 +30,15 @@ async function getTasks() {
   });
   const params = {
     TableName: 'tasksTable',
-    Key:{
-      "name": 'low-price-trigger',
+    FilterExpression: 'triggerId = :triggerId',
+    ExpressionAttributeValues: {
+      ":triggerId": 'eth-price-below'
     }
-  };
+  }
+
 
   try {
-    let result = await ddb.get(params)
+    let result = await ddb.scan(params)
     console.log("result~~~", result)
   } catch (e) {
     console.log(e)
@@ -83,7 +78,7 @@ module.exports = async (event, context, callback) => {
     tasks.forEach(task => {
       if(task.trigger.targetPriceUsd < mockCurrentPrice ){
         //trigger transfer lambda with 
-        // task.userAddress, task.action.toAddress, task.action.amount, task.action.privateKey
+        // task.userAddress, task.action.toAddress, task.action.address, task.action.privateKey
       }
     }) 
 

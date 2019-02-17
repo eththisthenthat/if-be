@@ -16,13 +16,15 @@ const CMC_API_SECRET = process.env.CMC_API_SECRET;
 /*
 Example event
 {
-    "SYMBOL" : "0xe5B73Dd4308E12C69E365f78611Dfee806317eD",
+    "SYMBOL" : "ETH",
   }
 */
 
 module.exports.updatePrice = async (event, context, callback) => {
   try {
-    let ethPrice = getPrice(event.symbol)
+    let symbol = 'ETH'
+    let ethPrice = await getPrice(symbol)
+    await writeDb(symbol, ethPrice)
     // TO DO: Write To DB
     return {
       statusCode: 200,
@@ -31,7 +33,7 @@ module.exports.updatePrice = async (event, context, callback) => {
         'Access-Control-Allow-Credentials': true,
       },
       body: JSON.stringify({
-        message: `${event.symbol} price updated`,
+        message: `ETH price updated`,
       }),
     };
   } catch (err) {
@@ -39,7 +41,7 @@ module.exports.updatePrice = async (event, context, callback) => {
     // callback(err, null)
   }
 }
-async function writedb(symbol, price) {
+async function writeDb(symbol, price) {
   const ddb = new AWS.DynamoDB({
     apiVersion: '2012-10-08'
   });
@@ -49,9 +51,9 @@ async function writedb(symbol, price) {
   console.log(timestamp)
 
   var params = {
-    TableName: 'CryptoPrices',
+    TableName: 'pricesTable',
     Item: {
-      'currency': {  S: symbol },
+      'symbol': {  S: symbol },
       'priceUsd': { N: Number(price) },
       'date': { N: timestamp.toString(10) }
     }
