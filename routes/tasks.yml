@@ -19,6 +19,13 @@ scanTasks:
         path: /tasks
         method: get
         cors: true
+queryTasks:
+  handler: /handlers/tasks/index/index.indexByUser
+  events:
+    - http:
+        path: /users/{address}/tasks
+        method: get
+        cors: true
 updateTask:
   handler: /handlers/tasks/update/index.update
   events:
