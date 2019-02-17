@@ -6,7 +6,7 @@ AWS.config.update({
 });
 const rp = require('request-promise');
 const assert = require('assert');
-const { isValidCurrency } = require('../assertUtils')
+const { isValidCurrency } = require('../../assertUtils')
 
 const CMC_API_SECRET = process.env.CMC_API_SECRET;
 
@@ -69,7 +69,6 @@ async function writeDb(symbol, price) {
 }
 
 async function getPrice(symbol){
-  assert(isValidCurrency(symbol), `Symbol "${symbol}" is not a supported currency!`)
   const requestOptions = {
     method: 'GET',
     uri: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`,
