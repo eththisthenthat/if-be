@@ -23,6 +23,7 @@ provider:
       Resource: 
         - { "Fn::GetAtt": ["usersTable", "Arn"] }
         - { "Fn::GetAtt": ["actionsTable", "Arn"] }
+        - { "Fn::GetAtt": ["tasksTable", "Arn"] }
 
 # you can define service wide environment variables here
 # environment:
@@ -31,6 +32,7 @@ provider:
 functions:
   - ${file(./routes/users.yml)}
   - ${file(./routes/actions.yml)}
+  - ${file(./routes/tasks.yml)}
 
   # getEthPrice:
   #   handler: handler.getEthPrice
@@ -57,6 +59,25 @@ resources:
       Properties:
         TableName: "actionsTable"
         AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: S
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    tasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "tasksTable"
+        AttributeDefinitions:
+          - AttributeName: "triggerId"
+            AttributeType: S
+          - AttributeName: "actionId"
+            AttributeType: S
+          - AttributeName: "userAddress"
+            AttributeType: S
           - AttributeName: "id"
             AttributeType: S
         KeySchema:
