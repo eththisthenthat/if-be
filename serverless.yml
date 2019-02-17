@@ -35,6 +35,7 @@ functions:
   - ${file(./routes/actions.yml)}
   - ${file(./routes/tasks.yml)}
   - ${file(./lambdas/getPrice.yml)}
+  - ${file(./lambdas/checkPrice.yml)}
 
 resources:
   Resources:

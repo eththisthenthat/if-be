@@ -3,9 +3,16 @@ require('dotenv').config()
 
 const ethers = require('ethers');
 const ENV = 'rinkeby'
-const mock_keypairs = require("../mocks/keypairs.json");
-const MOCK_PUBKEYS = require('../mocks/publicKeys.js')
+const mock_keypairs = require("../../mocks/keypairs.json");
+const MOCK_PUBKEYS = require('../../mocks/publicKeys.js')
 const toAddress = '0x1425b7581Ccc63d5e9aA5D186047a40b14e6f3DB'
+
+const {
+  scanTasksDb,
+  getDb,
+  scanDb,
+  queryWithParamsDb,
+} = require('../../Services/db');
 
 const AWS = require('aws-sdk');
 // Set the region 
@@ -24,59 +31,69 @@ Example event
   }
 */
 
+function onScan(err, data){
+  if (err) {
+    console.error("Unable to scan the table. Error JSON:", err);
+  }
+  else {
+    console.log('scan succeeded')
+    data.Items.forEach(function(task) {
+      console.log("Task~~~", task);
+    })
+  }
+}
+// getTasks();
 async function getTasks() {
-  const ddb = new AWS.DynamoDB({
-    apiVersion: '2012-10-08'
-  });
+
   const params = {
     TableName: 'tasksTable',
     FilterExpression: 'triggerId = :triggerId',
     ExpressionAttributeValues: {
-      ":triggerId": 'eth-price-below'
+      ':triggerId': 'eth-price-below'
     }
   }
-
-
   try {
-    let result = await ddb.scan(params)
-    console.log("result~~~", result)
+    // let result = await ddb.scan(params, onScan);
+    let result = await scanTasksDb();
+    // console.log("result~~~", result)
   } catch (e) {
-    console.log(e)
+    console.log("scan didn't work", e)
   }
-
 }
-
-async function getPrice(symbol)
-  const ddb = new AWS.DynamboDb({
-    apiVersion: '2012-10-08'
-  });
-  
+// getPrice()
+async function getPrice(){
   const params = {
-    TableName: 'priceTable',
-    Key:{
-      "symbol": 'ETH',
+    TableName: 'pricesTable',
+    KeyConditionExpression: "#symbol = :symbol",
+    ExpressionAttributeNames: {
+      '#symbol': 'symbol'
+    },
+    ExpressionAttributeValues: {
+      ":symbol": 'ETH'
     }
   };
-
   try {
-    let result = await ddb.get(params)
-    console.log("result~~~", result)
-    return result;
+    // let result = await ddb.get(params)
+    console.log("Here1")
+    let results = await getDb('pricesTable', {symbol: 'ETH'});
+    return results;
   } catch (e) {
     console.log(e)
   }
+};
 
-
-}
-
-module.exports = async (event, context, callback) => {
+module.exports.checkPrice = async (event, context, callback) => {
   try{
+    console.log("Getting Price")
     let currentPriceUsd = await getPrice('ETH');
     let mockCurrentPriceUsd = 110;
+    
+    console.log("Getting Tasks")
     let tasks = await getTasks();
 
     tasks.forEach(task => {
-      if(task.trigger.targetPriceUsd < mockCurrentPrice ){
+      if( task.trigger.targetPriceUsd < mockCurrentPriceUsd ){
+        console.log("task.forEach~~~")
         //trigger transfer lambda with 
         // task.userAddress, task.action.toAddress, task.action.address, task.action.privateKey
       }
@@ -96,6 +113,9 @@ module.exports = async (event, context, callback) => {
     //}
     // if(returnedPrice){
 
+  }
+  catch(e){
+    console.error(e)
   }
 }
 

@@ -1,0 +1,4 @@
+checkPrice:
+  handler: /Triggers/checkPrice/index.checkPrice
+  events:
+    - schedule: rate(1 minute)
