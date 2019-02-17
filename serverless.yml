@@ -24,6 +24,7 @@ provider:
         - { "Fn::GetAtt": ["usersTable", "Arn"] }
         - { "Fn::GetAtt": ["actionsTable", "Arn"] }
         - { "Fn::GetAtt": ["tasksTable", "Arn"] }
+        - { "Fn::GetAtt": ["pricesTable", "Arn"] }
 
 # you can define service wide environment variables here
 # environment:
@@ -33,11 +34,7 @@ functions:
   - ${file(./routes/users.yml)}
   - ${file(./routes/actions.yml)}
   - ${file(./routes/tasks.yml)}
-
-  # getEthPrice:
-  #   handler: handler.getEthPrice
-  #   events: 
-  #     - schedule: rate(1 minute)
+  - ${file(./lambdas/getPrice.yml)}
 
 resources:
   Resources:
@@ -64,7 +61,6 @@ resources:
         KeySchema:
           - AttributeName: "id"
             KeyType: HASH
-          - AttributeName: "db"
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
@@ -81,23 +77,23 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    pricesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "pricesTable"
+        AttributeDefinitions:
+          - AttributeName: "symbol"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "symbol"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
-    # pricesTable:
-    #   Type: AWS::DynamoDB::Table
-    #   Properties:
-    #     TableName: "pricesTable"
-    #     BillingMode: "PAY_PER_REQUEST"
-    #     AttributeDefinitions:
-    #       -
-    #         AttributeName: "symbol"
-    #         AttributeType: "S"
-    #     KeySchema:
-    #       -
-    #         AttributeName: "symbol"
-    #         KeyType: "HASH"
-
-dynamodb:
-  start:
-    port: 8000
-    inMemory: true
-    migrate: true
+custom: 
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
