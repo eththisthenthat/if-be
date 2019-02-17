@@ -15,11 +15,7 @@ module.exports.transferEther = async params => {
     to: toAddress,
     value: _amount
   };
-  const result = await wallet.sendTransaction(tx)
-}
-
-module.exports.testInvoke = (event, context, callback) => {
-  const params = {toAddress: '0x123', amt: 0.000008};
-
-  return module.exports.transferEther(params);
+  console.log('starting transaction', tx);
+  const result = await wallet.sendTransaction(tx);
+  console.log('sent', result);
 }

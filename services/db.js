@@ -96,13 +96,13 @@ module.exports.queryWithParamsDb = async (params) => {
   }
 }
 module.exports.scanTasksDb = async () => {
-  console.log("Reached")
+  console.log("Reached scan")
   const params = {
     TableName: 'tasksTable',
     FilterExpression: '#triggerId = :triggerId',
     ExpressionAttributeNames: {
      "#triggerId": "triggerId",
-    }
+    },
     ExpressionAttributeValues: {
       ":triggerId": 'eth-price-below'
     }
