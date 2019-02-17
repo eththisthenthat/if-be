@@ -19,6 +19,13 @@ scanActions:
         path: /actions
         method: get
         cors: true
+seedActions:
+  handler: handlers/actions/seed/index.seed
+  events:
+    - http:
+        path: /actions/seed
+        method: get
+        cors: true
 # updateAction:
 #   handler: handlers/actions/update/index.update
 #   events:

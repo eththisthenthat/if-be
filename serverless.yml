@@ -66,17 +66,8 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-custom:
-  dynamodb:
-    stages:
-      - dev
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-      seed: true
-    seed:
-      domain:
-        sources:
-          - table: actionsTable
-            sources: [./seeds/actions.json]
+dynamodb:
+  start:
+    port: 8000
+    inMemory: true
+    migrate: true

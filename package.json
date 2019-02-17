@@ -21,7 +21,8 @@
   "scripts": {
     "test": "test",
     "destroy": "NODE_ENV=production sls remove",
-    "deploy": "NODE_ENV=production sls deploy"
+    "deploy": "NODE_ENV=production sls deploy",
+    "seed": "NODE_ENV=production sls dynamodb seed --seed=domain"
   },
   "repository": {
     "type": "git",
