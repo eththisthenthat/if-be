@@ -35,12 +35,14 @@ module.exports.checkPrice = async (event, context, callback) => {
       const tasks = result.Items || [];
 
       for(const task of tasks) {
-        if (currentPriceUsd.priceUsd < task.triggerMeta.price) {
-          const params = {
-            toAddress: task.actionMeta.address,
-            amt: task.actionMeta.amount,
-          };
-          await transferEther(params);
+        if (task.isActive){
+          if (currentPriceUsd.priceUsd < task.triggerMeta.price) {
+            const params = {
+              toAddress: task.actionMeta.address,
+              amt: task.actionMeta.amount,
+            };
+            await transferEther(params);
+          }
         }
       }
     }
