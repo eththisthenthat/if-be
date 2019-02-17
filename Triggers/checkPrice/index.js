@@ -43,6 +43,8 @@ module.exports.checkPrice = async (event, context, callback) => {
             const params = {
               toAddress: task.actionMeta.address,
               amt: task.actionMeta.amount,
+              taskId: task.id,
+              taskHistory: task.taskHistory || [],
             };
             await transferEther(params);
           } else {
