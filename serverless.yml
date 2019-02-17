@@ -72,12 +72,6 @@ resources:
       Properties:
         TableName: "tasksTable"
         AttributeDefinitions:
-          - AttributeName: "triggerId"
-            AttributeType: S
-          - AttributeName: "actionId"
-            AttributeType: S
-          - AttributeName: "userAddress"
-            AttributeType: S
           - AttributeName: "id"
             AttributeType: S
         KeySchema:
@@ -87,8 +81,9 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-dynamodb:
-  start:
-    port: 8000
-    inMemory: true
-    migrate: true
+custom: 
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
