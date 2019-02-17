@@ -1,0 +1,11 @@
+checkPrice:
+  handler: /Triggers/checkPrice/index.checkPrice
+  events:
+    - schedule: rate(1 minute)
+checkPriceInvoke:
+  handler: /Triggers/checkPrice/index.checkPrice
+  events:
+    - http:
+        path: /checkPriceInvoke
+        method: get
+        cors: true

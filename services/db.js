@@ -87,3 +87,29 @@ module.exports.queryDb = async (TableName, address) => {
     console.log('err', e);
   }
 };
+
+module.exports.queryWithParamsDb = async (params) => {
+  try {
+    return await dynamodb.query(params).promise();
+  } catch(e) {
+    console.log('err', e);
+  }
+}
+module.exports.scanTasksDb = async () => {
+  console.log("Reached scan")
+  const params = {
+    TableName: 'tasksTable',
+    FilterExpression: '#triggerId = :triggerId',
+    ExpressionAttributeNames: {
+     "#triggerId": "triggerId",
+    },
+    ExpressionAttributeValues: {
+      ":triggerId": 'eth-price-below'
+    }
+  }
+  try {
+    return await dynamodb.scan(params).promise();
+  } catch(e) {
+    console.log('err', e);
+  }
+}
