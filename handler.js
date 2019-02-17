@@ -13,8 +13,7 @@ module.exports.hello = async (event, context) => {
   // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 };
 
-const getPrice = async (symbol) => {
-  assert(isValidCurrency(symbol), `Symbol "${symbol}" is not a supported currency!`)
+async function getPrice(symbol){
   const requestOptions = {
     method: 'GET',
     uri: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`,
@@ -30,12 +29,40 @@ const getPrice = async (symbol) => {
   }).catch((err) => {
     console.log('API call error:', err.message);
   });
-};
+}
+
+async function writeDb(symbol, price) {
+  const ddb = new AWS.DynamoDB({
+    apiVersion: '2012-10-08'
+  });
+
+  let date = new Date();
+  let timestamp = date.getTime();
+  console.log(timestamp)
+
+  var params = {
+    TableName: 'pricesTable',
+    Item: {
+      'symbol': {  S: symbol },
+      'priceUsd': { N: Number(price) },
+      'date': { N: timestamp.toString(10) }
+    }
+  };
+
+  try {
+    await ddb.putItem(params).promise()
+  } catch (e) {
+    console.log('error')
+    console.log(e)
+  }
+
+}
 
 module.exports.updatePrice = async (event, context, callback) => {
   try {
-    const symbol = 'ETH';
-    let ethPrice = getPrice(symbol)
+    let symbol = 'ETH'
+    let ethPrice = await getPrice(symbol)
+    await writeDb(symbol, ethPrice)
     // TO DO: Write To DB
     return {
       statusCode: 200,
@@ -44,8 +71,7 @@ module.exports.updatePrice = async (event, context, callback) => {
         'Access-Control-Allow-Credentials': true,
       },
       body: JSON.stringify({
-        message: `${symbol} price updated`,
-        // input: event,
+        message: `ETH price updated`,
       }),
     };
   } catch (err) {
