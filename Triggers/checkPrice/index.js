@@ -28,29 +28,46 @@ async function getPrice(){
 
 module.exports.checkPrice = async (event, context, callback) => {
   try{
-    let currentPriceUsd = await getPrice('ETH');
+    const prices = await getPrice('ETH');
+    const currentPriceUsd = prices.Item.priceUsd;
+    console.log(currentPriceUsd);
     
     const result = await scanTasksDb();
     if (result) {
       const tasks = result.Items || [];
+      console.log(tasks);
 
       for(const task of tasks) {
         if (task.isActive){
-          if (currentPriceUsd.priceUsd < task.triggerMeta.price) {
+          if (currentPriceUsd < task.triggerMeta.price) {
             const params = {
               toAddress: task.actionMeta.address,
               amt: task.actionMeta.amount,
             };
             await transferEther(params);
+          } else {
+            console.log(currentPriceUsd.priceUsd, task.triggerMeta.price)
           }
+        } else {
+          console.log(task.isActive)
         }
       }
     }
-    return;
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(
+        {message: 'success'}
+      ),
+    };
 
   }
   catch(e){
     console.error(e)
+    callback(err, null);
   }
 }
 
