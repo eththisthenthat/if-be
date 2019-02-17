@@ -8,29 +8,27 @@ const CMC_API_SECRET = process.env.CMC_API_SECRET;
 const rp = require('request-promise');
 const { writeDb, scanDb } = require('../../services/db');
 
-
-async function getPrice(symbol){
+async function getPrice(){
   const requestOptions = {
     method: 'GET',
-    uri: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`,
-    headers: {
-      'X-CMC_PRO_API_KEY': CMC_API_SECRET,
-    },
+    uri: 'https://api.coincap.io/v2/assets/ethereum',
     json: true,
-    gzip: true
-  };
+  }
   const response = await rp(requestOptions);
-  return response.data[symbol].quote.USD.price;
+  if(response.data){
+    console.log("getPrice~~~", response.data.priceUsd)
+    return response.data.priceUsd;
+  }
+  return '120'
 }
 
 module.exports.updateEthPrice = async (event, context, callback) => {
   try {
-    let symbol = 'ETH'
-    let ethPrice = await getPrice(symbol)
+    let ethPrice = await getPrice()
     let date = new Date();
     let timestamp = date.getTime();
     await writeDb('pricesTable', {
-      symbol,
+      'symbol': 'ETH',
       'priceUsd': Number(ethPrice),
       'date': timestamp.toString(10),
     });
