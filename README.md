@@ -6,7 +6,9 @@ _Automate your favorite on-chain activities! No coding necessary. #EthDenver 201
 You should 1. **Use a testnet** and 2. Use a public/private keypair **WITHOUT** a balance of Main Net Ether.
 
 ## Description
-EthTTT aims to be the "If This Then That" of Ethereum. A user should be able to define a "trigger" with conditions for which an "action" would fire. Both triggers and actions can be on or off-chain event.
+EthTTT aims to be the "If This Then That" of Ethereum. A user should be able to define a "trigger" with conditions for which an "action" would fire. Both triggers and actions can be on or off-chain event. We've since learned of projects such as [@MaticNetwork's](https://github.com/maticnetwork) [Zapier](https://matic.network/dagger/zapier/) integration and [EthVelcro](https://kauri.io/article/172e228b2e7d4beaa59c0a49a027ef1e/v1/ethvelcro)(another EthDenver Submission).
+
+[EthDenver Submission Link on Kauri](https://kauri.io/article/472179d37d274fb6b67f999a457d87b0/v2/eth-this-then-that-(ifttt-for-ethereum)) 
 
 **Examples:**
 * If there's a large transfer of your favorite token, send a text notification to my phoneGet notified if there's a large transfer of your favorite token! 
@@ -18,9 +20,7 @@ EthTTT aims to be the "If This Then That" of Ethereum. A user should be able to 
 1. To allow non-developers to define their own no-code triggers and actions
 2. To allow developers to contribute new triggers and actions. 
 
-https://kauri.io/article/172e228b2e7d4beaa59c0a49a027ef1e/v1/ethvelcro
 
-[EthDenver Submission Link on Kauri](https://kauri.io/article/472179d37d274fb6b67f999a457d87b0/v2/eth-this-then-that-(ifttt-for-ethereum))
 ## Work In Progress
 Triggers | Inputs | Status
 ------------- | ------------- | -------------
