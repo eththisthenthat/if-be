@@ -1,5 +1,4 @@
-# EthTTT- "If This Then That" for Ethereum 
-https://www.ethttt.com
+# [EthTTT](https://www.ethttt.com)- "If This, Then That" for Ethereum 
 _Automate your favorite on-chain activities! No coding necessary. #EthDenver 2019 Submission_
 
 ## This is currently under development :warning:
