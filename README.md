@@ -10,10 +10,10 @@ EthTTT aims to be the "If This Then That" of Ethereum. A user should be able to 
 [EthDenver Submission Link on Kauri](https://kauri.io/article/472179d37d274fb6b67f999a457d87b0/v2/eth-this-then-that-(ifttt-for-ethereum)) 
 
 **Examples:**
-* If there's a large transfer of your favorite token, send a text notification to my phoneGet notified if there's a large transfer of your favorite token! 
-* If my CDP is approaching liquidation, then top off my CDP.
-* If the price of Ethereum drops below $300, then trade my ether for dai.
-* If a DAO I participate in starts a vote, then send a text notification to my phone.
+* If there's a large transfer of your favorite token, send a text notification to your phone.
+* If my CDP is approaching liquidation, then top off your CDP.
+* If the price of Ethereum drops below $300, then trade your ether for dai.
+* If a DAO I participate in starts a vote, then send a text notification to your phone.
 
 ## Guiding Principles
 1. To allow non-developers to define their own no-code triggers and actions
